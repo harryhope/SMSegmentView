@@ -51,7 +51,7 @@ open class SMSegment: UIView {
     
     fileprivate func addUIElementsToView() {
         
-        self.imageView.contentMode = UIViewContentMode.scaleAspectFit
+        self.imageView.contentMode = UIViewContentMode.center
         self.addSubview(self.imageView)
         
         self.label.textAlignment = NSTextAlignment.center
@@ -107,16 +107,31 @@ open class SMSegment: UIView {
         self.isSelected = selected
         if selected == true {
             DispatchQueue.main.async(execute: {
-                self.backgroundColor = self.appearance?.segmentOnSelectionColour
-                self.label.textColor = self.appearance?.titleOnSelectionColour
-                self.imageView.image = self.onSelectionImage
+                UIView.transition(with: self.imageView,
+                                  duration: 0.25,
+                                  options: .transitionCrossDissolve,
+                                  animations: {
+                                    self.backgroundColor = self.appearance?.segmentOnSelectionColour
+                                    self.label.textColor = self.appearance?.titleOnSelectionColour
+                                    self.imageView.image = self.onSelectionImage
+                                  },
+                                  completion: nil
+                )
             })
         }
         else {
             DispatchQueue.main.async(execute: {
-                self.backgroundColor = self.appearance?.segmentOffSelectionColour
-                self.label.textColor = self.appearance?.titleOffSelectionColour
-                self.imageView.image = self.offSelectionImage
+                UIView.transition(with: self.imageView,
+                                  duration: 0.25,
+                                  options: .transitionCrossDissolve,
+                                  animations: {
+                                    self.backgroundColor = self.appearance?.segmentOffSelectionColour
+                                    self.label.textColor = self.appearance?.titleOffSelectionColour
+                                    self.imageView.image = self.offSelectionImage
+                                  },
+                                  completion: nil
+                )
+                
             })
         }
     }
